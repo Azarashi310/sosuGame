@@ -18,7 +18,7 @@
 	import numbers.Number9;
 	import page.DifficultSelect;
 	import system.GameMainManagement;
-	import system.SosuTable;
+	import numbers.SosuTable;
 	
 	public class GameMain extends MovieClip {
 		//数字のムービークリップ群
@@ -34,11 +34,9 @@
 		public var N9:Number9;
 		//問題数
 		public var counter:TextField;
-		private var count:int;
-		private var before_Count:int = 0;
 		//問題の範囲
-		private var quesArea:int = GameMainManagement.quesAreaMax;
-		private var quesArea_Root:int = GameMainManagement.quesAreaMin;
+		private var quesAreaMax:int = GameMainManagement.quesAreaMax;
+		private var quesAreaMin:int = GameMainManagement.quesAreaMin;
 		//ボタン
 		public var sosuButton:MovieClip;
 		public var notSosuButton:MovieClip;
@@ -73,35 +71,8 @@
 		//初期化用メソッド
 		private function Init()
 		{
-			/*
-			//難易度による変更（これを最初にやらんとアカンですよ！もうエヴァにはのらんといてくださいよ！）
-			switch(Diff)
-			{
-				case 0:
-					{
-						trace("Easy");
-						quesArea = 28;
-						quesArea_Root = 2;
-						break;
-					}
-				case 1:
-					{
-						trace("Normal");
-						quesArea = 48;
-						quesArea_Root = 12;
-						break;
-					}
-				case 2:
-					{
-						trace("Hard");
-						quesArea = 1000
-						quesArea_Root = 102;
-						break;
-					}
-			}
-			*/
 			//もう一度遊ぶを押されたとき用（問題数）
-			count = 1;
+			GameMainManagement.quesCount = 1;
 			//残り時間（約６０秒）
 			restTime = 60;
 			//問題数表示用
@@ -168,9 +139,9 @@
 		private function nextQues()
 		{
 			//カウントを増やす
-			count++;
+			GameMainManagement.quesCount++;
 			//～問目を増やす
-			counter.text = count.toString() + "問目";
+			counter.text = GameMainManagement.quesCount.toString() + "問目";
 			//もともと表示している数字の消去
 			numberDisplay.removeChildren();
 			//乱数の作成
@@ -185,19 +156,11 @@
 			while (true)
 			{
 				//素数は 2~ なので底値2からとりあえず30までで。（今後レベル作成などで分ける可能性あり）
-				rndNumber = Math.random() * quesArea + quesArea_Root << 0;
+				rndNumber = Math.random() * quesAreaMax + quesAreaMin << 0;
 				//ここで数字の重複を防ぐのと素数であるかの判別を渡しておく
 				if (rndNumber != rndNumber_Before)
 				{
-					//素数テーブルに乱数で作った数字があるか？（あれば変数sosuにtrueを入れる）
-					if (SosuTable.table.hasOwnProperty(rndNumber))
-					{
-						sosu = true;
-					}
-					else
-					{
-						sosu = false;
-					}
+					sosu = SosuTable.isPrime(rndNumber);
 					rndNumber_Before = rndNumber;
 					break;
 				}

@@ -16,9 +16,6 @@
 		//素数ってなに
 		public var howToSosu:MovieClip;
 		
-		//何がセレクトされたかの値
-		//public static var Diff:int = 0;
-		
 		public function DifficultSelect() {
 			// constructor code
 			//簡単
@@ -30,28 +27,7 @@
 			//素数
 			howToSosu.addEventListener(MouseEvent.CLICK, howToSosu_clickHandler);
 		}
-		/*
-		//かんたんボタンが押された
-		private function easyButton_clickHandler(e:MouseEvent):void 
-		{
-			//選択した難易度
-			GameMainManagement.difficult = 0;
-			//ローディング画面へ飛ばす
-			MovieClip(parent).gotoAndPlay("Init");
-		}
-		//ふつうボタンが押された
-		private function normalButton_clickHandler(e:MouseEvent):void 
-		{
-			GameMainManagement.difficult = 1;
-			MovieClip(parent).gotoAndPlay("Init");
-		}
-		//むずかしいボタンが押された
-		private function hardButton_clickHandler(e:MouseEvent):void 
-		{
-			GameMainManagement.difficult = 2;
-			MovieClip(parent).gotoAndPlay("Init");
-		}
-		*/
+		
 		//難易度選択ボタンが押された
 		private function difficultButton_clickHandler(e:MouseEvent):void 
 		{
@@ -77,7 +53,10 @@
 						break;
 					}
 			}
-			MovieClip(parent).gotoAndPlay("Init");
+			//難易度の初期化
+			GameMainManagement.difficultInit();
+			//ゲームへ飛ぶ
+			MovieClip(parent).gotoAndPlay("game");
 		}
 		//howToSosuボタンが押された
 		private function howToSosu_clickHandler(e:MouseEvent):void 
