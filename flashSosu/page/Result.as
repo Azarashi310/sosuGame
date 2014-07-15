@@ -14,16 +14,16 @@
 		public var answerCounter:TextField;
 		//コメント
 		public var coment:TextField;
-		//解いた数
-		private var count:int = GameMainManagement.quesCount; 
 		public function Result() 
 		{
 			// constructor code
+			//もういちど遊ぶボタン
 			oneMore.addEventListener(MouseEvent.CLICK, oneMore_clickHandler);
 			//問題数
-			answerCounter.text = (GameMainManagement.quesCount - 1) + "問";
-			
-			if (count == 0)
+			var count:int = GameMainManagement.quesCount - 1;
+			//回答数のテキスト
+			answerCounter.text = (count) + "問";
+			if (count < 1)
 			{
 				coment.text = "は？（威圧）";
 			}
